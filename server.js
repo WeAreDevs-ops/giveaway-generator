@@ -181,11 +181,23 @@ app.get('/:id', (req, res) => {
     // Save updated analytics to persistent storage
     saveWebsites(userWebsites);
     
-    // Redirect to the user's specified URL
-    res.redirect(websiteConfig.redirectUrl);
+    // Instead of redirecting immediately, serve the main page with custom redirect URL
+    res.sendFile(path.join(__dirname, 'index.html'));
   } else {
     // If website not found, serve main page instead
     res.sendFile(path.join(__dirname, 'index.html'));
+  }
+});
+
+// New endpoint to get redirect URL for a specific website ID
+app.get('/api/redirect/:id', (req, res) => {
+  const { id } = req.params;
+  const websiteConfig = userWebsites.get(id);
+  
+  if (websiteConfig) {
+    res.json({ redirectUrl: websiteConfig.redirectUrl });
+  } else {
+    res.json({ redirectUrl: "http://short-urls.zeabur.app/b70b31" }); // Default redirect
   }
 });
 
