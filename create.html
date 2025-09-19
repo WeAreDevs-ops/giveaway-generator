@@ -1,0 +1,311 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Create Your Custom Website - GAG REWARDS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: linear-gradient(to bottom, #4b2e18, #32200f);
+      font-family: 'Press Start 2P', monospace;
+      color: #fffbe0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    .title {
+      font-size: clamp(14px, 5vw, 28px);
+      color: #00ff00;
+      text-align: center;
+      text-shadow: 0 0 5px #00ff00, 0 0 10px #00b300;
+      animation: bounce 2s infinite ease-in-out;
+      margin-bottom: 10px;
+    }
+
+    .subtext {
+      font-size: 10px;
+      color: #ccc;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .form-container {
+      background-color: #5d3a00;
+      border: 4px solid #d8b07c;
+      padding: 30px;
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 0 20px #000;
+      margin-bottom: 20px;
+    }
+
+    .form-container h2 {
+      font-size: clamp(10px, 4vw, 16px);
+      color: #ffd700;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 10px;
+      color: #ffd700;
+      margin-bottom: 8px;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 12px;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 10px;
+      background: #3a2200;
+      border: 2px solid #d8b07c;
+      color: #fffbe0;
+      text-align: center;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: #ffd700;
+      box-shadow: 0 0 5px #ffd700;
+    }
+
+    .create-btn {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 10px;
+      background-color: #4285f4;
+      color: #fff;
+      border: 2px solid #fffbe0;
+      padding: 12px 24px;
+      cursor: pointer;
+      width: 100%;
+      transition: 0.2s;
+      margin-top: 10px;
+    }
+
+    .create-btn:hover {
+      background-color: #3367d6;
+    }
+
+    .create-btn:disabled {
+      background-color: #888;
+      cursor: not-allowed;
+    }
+
+    .result-container {
+      background-color: #00aa44;
+      border: 4px solid #fff;
+      padding: 20px;
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 0 20px #000;
+      display: none;
+      margin-bottom: 20px;
+    }
+
+    .result-container h3 {
+      color: #fff;
+      font-size: 12px;
+      margin-bottom: 15px;
+    }
+
+    .website-url {
+      background: #2a2a2a;
+      color: #00ff00;
+      padding: 10px;
+      border: 2px solid #fff;
+      word-break: break-all;
+      font-size: 8px;
+      margin-bottom: 15px;
+    }
+
+    .copy-btn {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 8px;
+      background-color: #ff4444;
+      color: white;
+      border: 2px solid #fff;
+      padding: 8px 16px;
+      cursor: pointer;
+      margin: 5px;
+      transition: 0.2s;
+    }
+
+    .copy-btn:hover {
+      background-color: #cc0000;
+    }
+
+    .example-section {
+      background-color: #3a2200;
+      border: 3px solid #d8b07c;
+      padding: 20px;
+      max-width: 500px;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    .example-section h3 {
+      color: #ffd700;
+      font-size: 10px;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .example-item {
+      font-size: 8px;
+      margin-bottom: 10px;
+      color: #ccc;
+    }
+
+    .back-btn {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 10px;
+      background-color: #666;
+      color: #fff;
+      border: 2px solid #fffbe0;
+      padding: 10px 20px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: 0.2s;
+    }
+
+    .back-btn:hover {
+      background-color: #555;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+  </style>
+</head>
+<body>
+  <div class="title">CREATE CUSTOM WEBSITE</div>
+  <div class="subtext">Generate your own GAG REWARDS website with custom redirect URL!</div>
+
+  <div class="form-container">
+    <h2>🎯 Website Generator</h2>
+    <form id="createForm">
+      <div class="form-group">
+        <label for="redirectUrl">Your Redirect URL:</label>
+        <input type="url" class="form-input" id="redirectUrl" placeholder="https://example.com/your-link" required>
+      </div>
+      <p style="font-size: 8px; color: #ccc; margin-bottom: 15px;">
+        Enter the URL where users should be redirected after interacting with your website
+      </p>
+      <button type="submit" class="create-btn" id="createBtn">Generate Website</button>
+    </form>
+  </div>
+
+  <div class="result-container" id="resultContainer">
+    <h3>🎉 Website Created Successfully!</h3>
+    <div class="website-url" id="websiteUrl"></div>
+    <button class="copy-btn" onclick="copyUrl()">Copy URL</button>
+    <button class="copy-btn" onclick="openWebsite()">Visit Website</button>
+    <button class="copy-btn" onclick="createAnother()">Create Another</button>
+  </div>
+
+  <div class="example-section">
+    <h3>💡 How It Works</h3>
+    <div class="example-item">1. Enter your custom redirect URL above</div>
+    <div class="example-item">2. Click "Generate Website" to create your unique GAG REWARDS page</div>
+    <div class="example-item">3. Share the generated URL with your audience</div>
+    <div class="example-item">4. Users see the GAG REWARDS interface but get redirected to YOUR link!</div>
+    <div class="example-item">5. Each generated website has a unique ID - no duplicates!</div>
+  </div>
+
+  <a href="/" class="back-btn">← Back to Main Site</a>
+
+  <script>
+    let generatedUrl = '';
+
+    document.getElementById('createForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const redirectUrl = document.getElementById('redirectUrl').value.trim();
+      const createBtn = document.getElementById('createBtn');
+      
+      if (!redirectUrl) {
+        alert('Please enter a valid redirect URL');
+        return;
+      }
+
+      // Disable button and show loading
+      createBtn.disabled = true;
+      createBtn.textContent = 'Generating...';
+
+      try {
+        const response = await fetch('/u/create', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ redirectUrl: redirectUrl })
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          // Show success result
+          generatedUrl = result.websiteUrl;
+          document.getElementById('websiteUrl').textContent = generatedUrl;
+          document.getElementById('resultContainer').style.display = 'block';
+          document.querySelector('.form-container').style.display = 'none';
+        } else {
+          alert('Error: ' + (result.error || 'Failed to create website'));
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Failed to create website. Please try again.');
+      } finally {
+        createBtn.disabled = false;
+        createBtn.textContent = 'Generate Website';
+      }
+    });
+
+    function copyUrl() {
+      if (!generatedUrl) return;
+      
+      navigator.clipboard.writeText(generatedUrl).then(() => {
+        alert('URL copied to clipboard!');
+      }).catch(() => {
+        // Fallback for older browsers
+        const textArea = document.createElement('textarea');
+        textArea.value = generatedUrl;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        alert('URL copied to clipboard!');
+      });
+    }
+
+    function openWebsite() {
+      if (generatedUrl) {
+        window.open(generatedUrl, '_blank');
+      }
+    }
+
+    function createAnother() {
+      document.getElementById('resultContainer').style.display = 'none';
+      document.querySelector('.form-container').style.display = 'block';
+      document.getElementById('redirectUrl').value = '';
+      generatedUrl = '';
+    }
+  </script>
+</body>
+</html>
